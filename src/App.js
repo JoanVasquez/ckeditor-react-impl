@@ -1,24 +1,23 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useEffect } from 'react';
+import { useState } from 'react';
 
 function App() {
+  const [ckEditorContent, setCkEditorContent] = useState('');
+
+  useEffect(() => {
+    window.CKEDITOR.replace('myCkEditor');
+    window.CKEDITOR.instances.myCkEditor.on('change', () => {
+      let content = window.CKEDITOR.instances.myCkEditor.getData();
+      setCkEditorContent(content);
+    });
+  }, [setCkEditorContent]);
+  console.log(ckEditorContent);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='container'>
+      <form action='#'>
+        <textarea name='' id='myCkEditor' cols='30' rows='30'></textarea>
+      </form>
     </div>
   );
 }
